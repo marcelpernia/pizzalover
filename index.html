@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+  <title>Pizza Lovers</title>
+</head>
+<body>
+  
+  <div id="app">
+    <section class="hero is-danger is-bold">
+      <div class="hero-body">
+        <div class="container">
+          <div class="level">
+            <div class="level-left">
+              <div>
+                <h1 class="title">
+                  {{title}}
+                </h1>
+                <h2 class="subtitle">
+                  La mejor Pizza!!
+                </h2>
+              </div>
+            </div>
+            <div class="level-right">
+              <span class="icon is-large"><i class="fa fa-pizza-slice fa-2x"></i></span><b>{{totalPizzas}}</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section">
+      <div class="container">
+        <div class="columns is-centered">
+          
+          <pizza 
+          v-for="pizza in pizzas" 
+            :key="pizza.id"
+            :nombre="pizza.nombre" 
+            :picture="pizza.picture" 
+            :cantidad="pizza.cantidad"
+            v-on:onemore="pizza.cantidad++, totalPizzas++"
+            v-on:oneless="pizza.cantidad--, totalPizzas--"/>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script type="text/x-template" id="pizza-template">
+    <div class="column is-one-third">
+      <div class="card">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img :src="picture">
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">{{nombre}}</p>
+            </div>
+          </div>
+        </div>
+        <footer class="card-footer">
+          <div href="#" class="card-footer-item">{{cantidad}}</div>
+          <div href="#" class="card-footer-item"><a href="" class="button is-light is-small is-fullwidth" v-on:click.prevent="menos"><span class="icon has-text-danger"><i class="fa fa-minus"></i></span></a></div>
+          <div href="#" class="card-footer-item"><a href="" class="button is-light is-small is-fullwidth" v-on:click.prevent="$emit('onemore')"><span class="icon has-text-success"><i class="fa fa-plus"></i></span></a></div>
+        </footer>
+      </div>
+    </div>
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="app.js"></script> 
+</body>
+</html>
